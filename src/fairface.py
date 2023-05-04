@@ -13,11 +13,15 @@ from PIL import Image
 from tqdm import tqdm
 
 class FairfaceData(Dataset):
-    def __init__(self, root_dir, transform=None):
+    def __init__(self, root_dir, csv, target='age', transform=None):
         super().__init__()
         self.root_dir = root_dir
-        self.annotations = pd.read_csv(os.path.join(self.root_dir, 'fairface_label_train.csv'))
+        self.annotations = pd.read_csv(os.path.join(self.root_dir, csv))
         self.transform = transform
+        self.age = pd.get_dummies(self.annotations['age'], drop_first=True).astype(float)
+        self.gender = pd.get_dummies(self.annotations['gender'], drop_first=True).astype(float)
+        self.race = pd.get_dummies(self.annotations['race'], drop_first=True).astype(float)
+        self.target = target
 
     def __len__(self):
         return len(self.annotations)
@@ -26,22 +30,14 @@ class FairfaceData(Dataset):
         img_path = os.path.join(self.root_dir, self.annotations.iloc[index, 0])
         image = Image.open(img_path)
         
-        class_map = {'Latino_Hispanic': 0,
-             'East Asian': 1,
-             'Indian': 2,
-             'Middle Eastern': 3,
-             'Black': 4,
-             'Southeast Asian': 5,
-             'White': 6
-             }
-        
-        label = self.annotations.iloc[index, 3]
-        label = class_map[label]
+        age = torch.from_numpy(self.age.iloc[index].to_numpy())
+        race = torch.from_numpy(self.race.iloc[index].to_numpy())
+        gender = torch.from_numpy(self.gender.iloc[index].to_numpy())
         
         if self.transform:
             image = self.transform(image)
         
-        return image, label
+        return image, age, race, gender
 
 
 if __name__ == '__main__':
