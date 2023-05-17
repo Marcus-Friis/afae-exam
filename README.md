@@ -7,11 +7,8 @@ Mads Høgenhaug d. seje, Marcus Friis & Mia Pugholm
 Dataset 1: https://www.kaggle.com/datasets/wenruliu/adult-income-dataset \
 Dataset 2: https://www.kaggle.com/datasets/thedevastator/higher-education-predictors-of-student-retention
 
-#todo 
-- dumbell
-- shap
-- repeat for 3
+# todo 
+- tilføj demographic parity og flere hvis giver mening, lav lidt research
 - repeat for dropout
-- flere statistike measures??
-- grid search for gamma
-- (hvis tid, mere fairness - individual, hybrid)
+- pareto curves for triple constrained model
+- ***SKRIV FRICKING RAPPORT***
