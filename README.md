@@ -12,3 +12,4 @@ Dataset 2: https://www.kaggle.com/datasets/thedevastator/higher-education-predic
 - repeat for dropout
 - pareto curves for triple constrained model
 - ***SKRIV FRICKING RAPPORT***
+- Skriv readme :)
